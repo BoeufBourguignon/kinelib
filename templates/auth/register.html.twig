@@ -1,0 +1,16 @@
+{# templates/auth/register.html.twig #}
+{# Controller: AuthController, Route: /register (register) #}
+
+{% extends 'auth/base_auth.html.twig' %}
+
+{% block title %}KineLib - Connexion{% endblock %}
+
+{% block auth_tab %}
+    {{ form_start(registrationForm) }}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        {{ form_row(registrationForm.email) }}
+        {{ form_row(registrationForm.password) }}
+
+        <button type="submit" class="btn btn-primary">Register</button>
+    {{ form_end(registrationForm) }}
+{% endblock %}

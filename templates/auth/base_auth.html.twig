@@ -1,0 +1,24 @@
+{# templates/auth/base_auth.html.twig #}
+{# Base for controller AuthController #}
+{# Used with routes login and register #}
+
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h1 class="app-title">KineLib</h1>
+    <div class="auth-wrapper">
+        <div class="auth-tabs">
+            <a href="{{ path('login') }}">Connexion</a>
+            <a href="{{ path('register') }}">Inscription</a>
+        </div>
+        <div class="auth-tab-wrapper">
+            {% block auth_tab %}
+
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

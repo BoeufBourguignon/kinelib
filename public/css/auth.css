@@ -1,0 +1,28 @@
+.app-title {
+  text-align: center;
+  margin: 16px 0;
+}
+
+.auth-wrapper {
+  margin: 16px auto;
+  width: 40rem;
+}
+.auth-wrapper .auth-tabs {
+  display: flex;
+}
+.auth-wrapper .auth-tabs a {
+  flex: 1;
+  background-color: whitesmoke;
+  text-align: center;
+  padding: 16px;
+}
+.auth-wrapper .auth-tabs a:hover {
+  background-color: lightgray;
+}
+.auth-wrapper .auth-tab-wrapper {
+  border-radius: 0 0 5px 5px;
+  border: 2px solid whitesmoke;
+  padding: 16px;
+}
+
+/*# sourceMappingURL=auth.css.map */
