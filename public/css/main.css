@@ -1,0 +1,16 @@
+.user-id {
+  margin-right: 16px;
+}
+
+.main_wrapper {
+  margin: 16px auto;
+  width: 45rem;
+}
+.main_wrapper .accordion-header-text {
+  min-width: 25%;
+}
+.main_wrapper .next-dispo {
+  margin-left: 16px;
+}
+
+/*# sourceMappingURL=main.css.map */
