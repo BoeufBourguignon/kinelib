@@ -40,22 +40,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $adresse;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $codePostal;
+    private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $ville;
+    private $prenom;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $tel;
 
     public function getId(): ?int
     {
@@ -127,50 +118,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getAdresse(): ?string
+    public function getNom(): ?string
     {
-        return $this->adresse;
+        return $this->nom;
     }
 
-    public function setAdresse(string $adresse): self
+    public function setNom(string $nom): self
     {
-        $this->adresse = $adresse;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getCodePostal(): ?int
+    public function getPrenom(): ?string
     {
-        return $this->codePostal;
+        return $this->prenom;
     }
 
-    public function setCodePostal(int $codePostal): self
+    public function setPrenom(string $prenom): self
     {
-        $this->codePostal = $codePostal;
-
-        return $this;
-    }
-
-    public function getVille(): ?string
-    {
-        return $this->ville;
-    }
-
-    public function setVille(string $ville): self
-    {
-        $this->ville = $ville;
-
-        return $this;
-    }
-
-    public function getTel(): ?int
-    {
-        return $this->tel;
-    }
-
-    public function setTel(int $tel): self
-    {
-        $this->tel = $tel;
+        $this->prenom = $prenom;
 
         return $this;
     }

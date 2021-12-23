@@ -10,6 +10,9 @@
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         {{ form_row(registrationForm.email) }}
         {{ form_row(registrationForm.password) }}
+        {{ form_row(registrationForm.prenom) }}
+        {{ form_row(registrationForm.nom) }}
+        {{ form_row(registrationForm.isKine) }}
 
         <button type="submit" class="btn btn-primary">Register</button>
     {{ form_end(registrationForm) }}

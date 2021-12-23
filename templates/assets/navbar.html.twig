@@ -5,14 +5,21 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{ path('home') }}">Accueil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Mes rendez-vous</a>
                 </li>
+                {% if is_granted('ROLE_KINE') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Mon emploi du temps</a>
+                </li>
+                {% endif %}
             </ul>
+            <span class="text-light user-id">{{ app.user.email }}</span>
+            <a href="{{ path('logout') }}" class="btn btn-primary">Déconnexion</a>
         </div>
     </div>
 </nav>

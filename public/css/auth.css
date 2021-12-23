@@ -19,9 +19,14 @@
 .auth-wrapper .auth-tabs a:hover {
   background-color: lightgray;
 }
+.auth-wrapper .auth-tabs .active {
+  background-image: linear-gradient(whitesmoke, #CAE2EF);
+  border-bottom: 3px solid lightblue;
+}
 .auth-wrapper .auth-tab-wrapper {
   border-radius: 0 0 5px 5px;
   border: 2px solid whitesmoke;
+  border-top: none;
   padding: 16px;
 }
 

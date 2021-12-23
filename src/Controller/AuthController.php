@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AuthController extends AbstractController
@@ -49,7 +48,10 @@ class AuthController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
-            $user->setRoles(['ROLE_USER']);
+            if($form['isKine']->getData())
+                $user->setRoles(['ROLE_KINE']);
+            else
+                $user->setRoles(['ROLE_USER']);
 
             $entityManager->persist($user);
             $entityManager->flush();

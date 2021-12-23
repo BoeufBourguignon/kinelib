@@ -12,8 +12,8 @@
     <h1 class="app-title">KineLib</h1>
     <div class="auth-wrapper">
         <div class="auth-tabs">
-            <a href="{{ path('login') }}">Connexion</a>
-            <a href="{{ path('register') }}">Inscription</a>
+            <a href="{{ path('login') }}" {% if app.request.pathinfo == '/login' %}class="active"{% endif %}>Connexion</a>
+            <a href="{{ path('register') }}" {% if app.request.pathinfo == '/register' %}class="active"{% endif %}>Inscription</a>
         </div>
         <div class="auth-tab-wrapper">
             {% block auth_tab %}

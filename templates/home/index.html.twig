@@ -2,6 +2,38 @@
 
 {% block title %}KineLib{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+{% endblock %}
+
 {% block body %}
     {% include 'assets/navbar.html.twig' %}
+
+    <div class="main_wrapper">
+        <div class="accordion" id="accordionKines">
+        {% for kine in kines %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading{{ kine.id }}">
+                    <button class="accordion-button collapsed"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapse{{ kine.id }}"
+                            aria-expanded="false"
+                            aria-controls="collapse{{ kine.id }}">
+                        <span class="accordion-header-text">Dr. {{ kine.nom|upper }} {{ kine.prenom|capitalize }}</span>
+                        <span class="text-muted next-dispo">Prochaine disponibilité</span>
+                    </button>
+                </h2>
+                <div id="collapse{{ kine.id }}"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="heading{{ kine.id }}"
+                     data-bs-parent="#accordionKines">
+                    <div class="accordion-body">
+                        Prenez rendez-vous plus tard
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
 {% endblock %}
