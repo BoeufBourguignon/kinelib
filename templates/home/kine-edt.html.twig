@@ -16,14 +16,21 @@
             {% for jour in edt %} {# pour chaque jour #}
                 <tr>
                     <th scope="col">{{ jour.nom }}</th>
-                    {% for periodeName, heures in jour.periode %}
-                        {% if periodeName == 'all' %}
-                            <td>{{ heures.heureDebut }}</td>
-                            <td>{{ heures.heureFin }}</td>
-                        {% else %}
-                            <td>{{ heures.heureDebut }} - {{ heures.heureFin }}</td>
-                        {% endif %}
-                    {% endfor %}
+                    {% if jour.periode['all'] is defined %}
+                        <td>{{ jour.periode['all'].heureDebut }}</td>
+                        <td>{{ jour.periode['all'].heureFin }}</td>
+                    {% else %}
+                            <td>{{ jour.periode['matin'].heureDebut }} - {{ jour.periode['matin'].heureFin }}</td>
+                            <td>{{ jour.periode['aprem'].heureDebut }} - {{ jour.periode['aprem'].heureFin }}</td>
+                    {% endif %}
+{#                    {% for periodeName, heures in jour.periode %}#}
+{#                        {% if periodeName == 'all' %}#}
+{#                            <td>{{ heures.heureDebut }}</td>#}
+{#                            <td>{{ heures.heureFin }}</td>#}
+{#                        {% else %}#}
+{#                            <td>{{ heures.heureDebut }} - {{ heures.heureFin }}</td>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
                 </tr>
             {% endfor %}
             </tbody>

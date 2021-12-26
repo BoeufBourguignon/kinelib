@@ -54,9 +54,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $eDTs;
 
+    /**
+     * @ORM\OneToMany(targetEntity=RDV::class, mappedBy="user")
+     */
+    private $rDVs;
+
     public function __construct()
     {
         $this->eDTs = new ArrayCollection();
+        $this->rDVs = new ArrayCollection();
     }
 
 
@@ -178,6 +184,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($eDT->getIdKine() === $this) {
                 $eDT->setIdKine(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|RDV[]
+     */
+    public function getRDVs(): Collection
+    {
+        return $this->rDVs;
+    }
+
+    public function addRDV(RDV $rDV): self
+    {
+        if (!$this->rDVs->contains($rDV)) {
+            $this->rDVs[] = $rDV;
+            $rDV->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRDV(RDV $rDV): self
+    {
+        if ($this->rDVs->removeElement($rDV)) {
+            // set the owning side to null (unless already changed)
+            if ($rDV->getUser() === $this) {
+                $rDV->setUser(null);
             }
         }
 

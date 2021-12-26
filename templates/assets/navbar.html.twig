@@ -10,11 +10,11 @@
                     <a class="nav-link {% if app.request.pathinfo == '/' %}active{% endif %}" aria-current="page" href="{{ path('home') }}">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Mes rendez-vous</a>
+                    <a class="nav-link {% if app.request.pathinfo == '/rdv' %}active{% endif %}" href="{{ path('rdvs') }}">Mes rendez-vous</a>
                 </li>
                 {% if is_granted('ROLE_KINE') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('kine_edt') }}">Mon emploi du temps</a>
+                    <a class="nav-link {% if app.request.pathinfo == '/kine/edt' %}active{% endif %}" href="{{ path('kine_edt') }}">Mon emploi du temps</a>
                 </li>
                 {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}

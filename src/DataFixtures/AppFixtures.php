@@ -2,10 +2,11 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\EDT;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
+use App\Entity\EDT;
+use App\Entity\RDV;
 use Faker\Factory;
 use Cocur\Slugify\Slugify;
 
@@ -16,8 +17,10 @@ class AppFixtures extends Fixture
         $faker = Factory::create('fr_FR');
         $slugify = new Slugify();
 
-        //Kinés
-        for($i = 0; $i < 10; $i++)
+        $kines = array();
+
+        // Kinés
+        for($i = 0; $i < 5; $i++)
         {
             $user = new User();
             $nom = $faker->lastName;
@@ -69,6 +72,41 @@ class AppFixtures extends Fixture
                         $manager->persist($edtAprem);
                     }
                 }
+            }
+
+            $kines[] = $user;
+            $manager->persist($user);
+        }
+        // Users
+        for($i = 0; $i < 5; $i++)
+        {
+            $user = new User();
+            $nom = $faker->lastName;
+            $prenom = $faker->firstName;
+
+            $user->setRoles(['ROLE_USER']);
+            $user->setEmail($slugify->slugify($prenom).'.'.$slugify->slugify($nom).'@gmail.com');
+            $user->setNom($nom);
+            $user->setPrenom($prenom);
+            $user->setPassword(password_hash('jeanjean', PASSWORD_BCRYPT));
+
+            //Rendez-vous
+            //Pris sur la semaine d'avant, la semaine actuelle ou la semaine prochaine
+            //10 rdv par personne
+            date_default_timezone_set('Europe/Paris');
+            $curDate = time();
+            $curWeek = date('W', $curDate);
+            $firstDayOfWeek = (new \DateTime())->setISODate(date('Y', $curDate), $curWeek);
+            $minTimeStamp = strtotime('-7 days', $firstDayOfWeek->getTimestamp());
+            $maxTimeStamp = strtotime('+13 days', $firstDayOfWeek->getTimestamp());
+            $date = rand($minTimeStamp, $maxTimeStamp);
+            for($j=0;$j<10;$j++) {
+                $rdv = new RDV();
+                $rdv->setDate((new \DateTime())->setDate(date('Y', $date), date('m', $date), date('d', $date)));
+                $rdv->setKine($kines[rand(0,count($kines)-1)]);
+                $rdv->setUser($user);
+                $rdv->setHeureDebut(['09','10','11','12','14','15','16','17'][rand(0,7)].':'.['00','30'][rand(0,1)]);
+                $manager->persist($rdv);
             }
 
             $manager->persist($user);

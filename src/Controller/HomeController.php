@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\EDTRepository;
+use App\Repository\RDVRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -77,5 +78,18 @@ class HomeController extends AbstractController
         $edt = $EDTRepository->getNiceLookingArrayFindByKine($user, $userRepository);
 
         return $this->render('home/kine-edt.html.twig', ['edt' => $edt]);
+    }
+
+    #[Route('/rdv', name: 'rdvs')]
+    public function mesRdv(UserRepository $userRepository, RDVRepository $RDVRepository): Response {
+        $user = $this->getUser();
+        if ($user=== null)
+            return $this->redirectToRoute('login');
+        $user = $userRepository->findOneBy(['email' => $user->getUserIdentifier()]);
+
+        $sesRdvs = $user->getEDTs();
+        dd($sesRdvs);
+
+        return $this->render('home/rdvs.html.twig', ['rdvs' => $sesRdvs]);
     }
 }
