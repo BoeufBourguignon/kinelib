@@ -30,7 +30,7 @@ class AdminController extends AbstractController
         if($user === null || !in_array("ROLE_ADMIN", $user->getRoles()))
             return $this->redirectToRoute('home');
 
-        $edts = $EDTRepository->getNiceLookingArray();
+        $edts = $EDTRepository->getNiceLookingArrayFindAll();
         //dd($edts);
 
         return $this->render('admin/edt-kines.html.twig', ['edts' => $edts]);

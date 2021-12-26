@@ -3,8 +3,10 @@
 namespace App\Repository;
 
 use App\Entity\EDT;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @method EDT|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,7 +21,34 @@ class EDTRepository extends ServiceEntityRepository
         parent::__construct($registry, EDT::class);
     }
 
-    public function getNiceLookingArray(): array
+    public function getNiceLookingArrayFindByKine(UserInterface $Iuser, UserRepository $userRepository): array
+    {
+        $jours = array(
+            '0' => 'Lundi',
+            '1' => 'Mardi',
+            '2' => 'Mercredi',
+            '3' => 'Jeudi',
+            '4' => 'Vendredi',
+            '5' => 'Samedi',
+            '6' => 'Dimanche'
+        );
+
+
+
+        $edts = $this->findBy(['idKine' => $userRepository->findBy(['email' => $Iuser->getUserIdentifier()])]);
+        $niceEdt = array();
+        foreach($edts as $edt)
+        {
+            $niceEdt[$edt->getJour()]['nom']                                        = $jours[$edt->getJour()];
+            $niceEdt[$edt->getJour()]['periode'][$edt->getPeriode()]['heureDebut']  = $edt->getHeureDebut();
+            $niceEdt[$edt->getJour()]['periode'][$edt->getPeriode()]['heureFin']    = $edt->getHeureFin();
+            ksort($niceEdt);
+            //krsort($niceEdit[$edt->getJour()]["periode"]);
+        }
+        return $niceEdt;
+    }
+
+    public function getNiceLookingArrayFindAll(): array
     {
         $jours = array(
             '0' => 'Lundi',
@@ -44,6 +73,7 @@ class EDTRepository extends ServiceEntityRepository
             $edtswithusers[$kine->getId()]['edt'][$edt->getJour()]["periode"][$edt->getPeriode()]['heureDebut'] = $edt->getHeureDebut();
             $edtswithusers[$kine->getId()]['edt'][$edt->getJour()]["periode"][$edt->getPeriode()]['heureFin'] = $edt->getHeureFin();
             ksort($edtswithusers[$kine->getId()]['edt']);
+            krsort($edtswithusers[$kine->getId()]['edt'][$edt->getJour()]["periode"]);
         }
         return $edtswithusers;
     }

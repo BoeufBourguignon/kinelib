@@ -28,24 +28,23 @@
                          aria-labelledby="heading{{ idKine }}"
                          data-bs-parent="#accordionKines">
                         <div class="accordion-body">
-                            <ul class="list-group">
-                                {% for jour, content in infos.edt %}
-                                <li class="list-group-item">
-                                    <p>{{ content.nom }}</p>
-                                    <ul class="list-group">
-                                    {% for nomPeriode, heures in content.periode %}
-                                        <li class="list-group-item">
-                                            <p>{{ nomPeriode }}</p>
-                                            <ul class="list-group">
-                                                <li class="list-group-item">{{ heures.heureDebut }}</li>
-                                                <li class="list-group-item">{{ heures.heureFin }}</li>
-                                            </ul>
-                                        </li>
+                            <table class="table">
+                                <tbody>
+                                    {% for jour in infos.edt %} {# pour chaque jour #}
+                                    <tr>
+                                        <th scope="col">{{ jour.nom }}</th>
+                                        {% for periodeName, heures in jour.periode %}
+                                            {% if periodeName == 'all' %}
+                                                <td>{{ heures.heureDebut }}</td>
+                                                <td>{{ heures.heureFin }}</td>
+                                            {% else %}
+                                                <td>{{ heures.heureDebut }} - {{ heures.heureFin }}</td>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tr>
                                     {% endfor %}
-                                    </ul>
-                                </li>
-                                {% endfor %}
-                            </ul>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
