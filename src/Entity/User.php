@@ -50,7 +50,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $prenom;
 
     /**
-     * @ORM\OneToMany(targetEntity=EDT::class, mappedBy="idKine")
+     * @ORM\OneToMany(targetEntity=EDT::class, mappedBy="kine")
      */
     private $eDTs;
 
@@ -172,7 +172,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->eDTs->contains($eDT)) {
             $this->eDTs[] = $eDT;
-            $eDT->setIdKine($this);
+            $eDT->setKine($this);
         }
 
         return $this;
@@ -182,8 +182,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->eDTs->removeElement($eDT)) {
             // set the owning side to null (unless already changed)
-            if ($eDT->getIdKine() === $this) {
-                $eDT->setIdKine(null);
+            if ($eDT->getKine() === $this) {
+                $eDT->setKine(null);
             }
         }
 

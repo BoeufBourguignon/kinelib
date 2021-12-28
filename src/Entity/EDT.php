@@ -10,21 +10,19 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EDT
 {
-//    /**
-//     * @ORM\Id
-//     * @ORM\GeneratedValue
-//     * @ORM\Column(type="integer")
-//     */
-//    private $id;
-
     /**
      * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
      * @ORM\Column(type="string", length=10)
      */
     private $periode;
 
     /**
-     * @ORM\Id
      * @ORM\Column(type="integer")
      */
     private $jour;
@@ -40,16 +38,15 @@ class EDT
     private $heureFin;
 
     /**
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="eDTs")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idKine;
+    private $kine;
 
-//    public function getId(): ?int
-//    {
-//        return $this->id;
-//    }
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getPeriode(): ?string
     {
@@ -99,14 +96,14 @@ class EDT
         return $this;
     }
 
-    public function getIdKine(): ?User
+    public function getKine(): ?User
     {
-        return $this->idKine;
+        return $this->kine;
     }
 
-    public function setIdKine(?User $idKine): self
+    public function setKine(?User $kine): self
     {
-        $this->idKine = $idKine;
+        $this->kine = $kine;
 
         return $this;
     }

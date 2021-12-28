@@ -2,18 +2,84 @@
   margin-right: 16px;
 }
 
+.navbar {
+  .separator {
+    border: solid 1px #2c3e50;
+    margin: 0 4px;
+  }
+}
+
 .main_wrapper {
-  margin: 16px auto;
-  width:45rem;
+  margin: 32px auto;
+  width: 90%;
   .accordion-header-text {
-    min-width: 25%;
+    min-width: 20%;
   }
   .next-dispo {
     margin-left: 16px;
   }
-  .heures {
-    button {
-      margin: 4px;
+
+  .edt-navbar {
+    display: flex;
+    margin-bottom: 8px;
+    font-weight: bold;
+    .edt-btn {
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      &:hover {
+        background-color: gainsboro;
+      }
+    }
+    p {
+      margin: 8px 0;
+    }
+  }
+
+  .calendar-container {
+    position: relative;
+    .loading-spinner {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top:0;
+      width:100%;
+      height:100%;
+      background-color: rgba(50,50,50,.2);
+    }
+  }
+}
+
+.table-horizontal {
+  width: 100%;
+  tbody {
+    display: flex;
+    tr {
+      border: 1px solid #dee2e6;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      th, td {
+        padding: 8px;
+      }
+      th {
+        border-bottom: 1px solid #dee2e6;
+        text-align: center;
+      }
+      td {
+        display: flex;
+        flex-direction: column;
+        .rdv {
+          margin: 2px 2px 4px 2px;
+          padding: 2px;
+          border-radius: 5px;
+        }
+      }
+      .prendre-rdv-btn {
+        padding: 2px 0;
+        margin: 2px 0;
+      }
     }
   }
 }

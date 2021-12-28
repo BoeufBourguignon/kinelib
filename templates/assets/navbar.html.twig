@@ -13,17 +13,22 @@
                     <a class="nav-link {% if app.request.pathinfo == '/rdv' %}active{% endif %}" href="{{ path('rdvs') }}">Mes rendez-vous</a>
                 </li>
                 {% if is_granted('ROLE_KINE') %}
+                <li class="separator"></li>
                 <li class="nav-item">
                     <a class="nav-link {% if app.request.pathinfo == '/kine/edt' %}active{% endif %}" href="{{ path('kine_edt') }}">Mon emploi du temps</a>
                 </li>
                 {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
+                <li class="separator"></li>
                 <li class="nav-item">
                     <a class="nav-link {% if app.request.pathinfo == '/admin/edt-kines' %}active{% endif %}" href="{{ path('admin_edt_kines') }}">Les EDT kinés</a>
                 </li>
+                    <li class="nav-item">
+                    <a class="nav-link {% if app.request.pathinfo == '/admin/rdv-kines' %}active{% endif %}" href="{{ path('admin_rdv_kines') }}">Les RDV kinés</a>
+                </li>
                 {% endif %}
             </ul>
-            <span class="text-light user-id">{{ app.user.email }}</span>
+            <span class="text-light user-id">{% if is_granted('ROLE_KINE') %}KINE{% elseif is_granted('ROLE_ADMIN') %}ADMIN{% else %}USER{% endif %} - {{ app.user.email }}</span>
             <a href="{{ path('logout') }}" class="btn btn-primary">Déconnexion</a>
         </div>
     </div>

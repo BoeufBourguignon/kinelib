@@ -10,32 +10,39 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RDV
 {
-
     /**
      * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private $id;
+
+    /**
      * @ORM\Column(type="string", length=5)
      */
     private $heureDebut;
 
     /**
-     * @ORM\Id
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="rDVs")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $kine;
-
-    /**
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity=user::class, inversedBy="rDVs")
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $kine;
+
+    /**
      * @ORM\Column(type="date")
      */
     private $date;
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function getHeureDebut(): ?string
     {
@@ -49,6 +56,18 @@ class RDV
         return $this;
     }
 
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
     public function getKine(): ?User
     {
         return $this->kine;
@@ -57,18 +76,6 @@ class RDV
     public function setKine(?User $kine): self
     {
         $this->kine = $kine;
-
-        return $this;
-    }
-
-    public function getUser(): ?user
-    {
-        return $this->user;
-    }
-
-    public function setUser(?user $user): self
-    {
-        $this->user = $user;
 
         return $this;
     }

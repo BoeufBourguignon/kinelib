@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}KineLib{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'assets/navbar.html.twig' %}
+
+    <div class="main_wrapper">
+        <h1>Vérification des infos du rendez-vous</h1>
+        <p><strong>Kiné : </strong>{{ rdvToAdd.kine.email }}</p>
+        <p><strong>Date : </strong>{{ rdvToAdd.date|date('d/m/Y') }}</p>
+        <p><strong>Heure : </strong>{{ rdvToAdd.heureDebut }}</p>
+        <a class="btn btn-success" href="{{ path('add_rdv', {'isSent':true, 'kine': rdvToAdd.kine.id, 'heure': rdvToAdd.heureDebut, 'date': rdvToAdd.date|date('d/m/Y') }) }}">Valider</a>
+        <a class="btn btn-danger" href="{{ path(('home')) }}">Annuler</a>
+    </div>
+{% endblock %}

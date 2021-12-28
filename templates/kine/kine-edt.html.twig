@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}KineLib ADMIN - Liste des EDT des kinés{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+{% endblock %}
+
+{% block body %}
+    {% include 'assets/navbar.html.twig' %}
+
+    <div class="main_wrapper">
+        <h1>Vos horraires</h1>
+        <table class="table">
+            <tbody>
+            {% for jour in edt %} {# pour chaque jour #}
+                <tr>
+                    <th scope="col">{{ jour.nom }}</th>
+                    {% if jour.periode['all'] is defined %}
+                        <td>{{ jour.periode['all'].heureDebut }}</td>
+                        <td>{{ jour.periode['all'].heureFin }}</td>
+                    {% else %}
+                            <td>{{ jour.periode['matin'].heureDebut }} - {{ jour.periode['matin'].heureFin }}</td>
+                            <td>{{ jour.periode['aprem'].heureDebut }} - {{ jour.periode['aprem'].heureFin }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <br class="mx-5">
+        <h1 class="mb-3">Vos rendez-vous</h1>
+        <table class="table-horizontal jours">
+            <tbody>
+            {% for date, content in rdvs %}
+                <tr>
+                    <th scope="row">{{ content.jour }}<br>{{ date }}</th>
+                    <td class="heures">
+                        {% if content.rdvs is defined %}
+                            {% for heure, infos in content.rdvs %}
+                                <div class="bg-light rdv">
+                                    {{ heure }}
+                                    <br>
+                                    {{ infos.prenom|capitalize }} {{ infos.nom|upper }}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted text-center">____</p>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+{#        {% if rdvs %}#}
+{#            {% for date, rdvs in rdvs %}#}
+{#                <div class="mb-3">#}
+{#                    <h2>{{ date }}</h2>#}
+{#                    <ul class="list-group">#}
+{#                        {% for heure, rdv in rdvs %}#}
+{#                            <li class="list-group-item">#}
+{#                                <strong>{{ heure }}</strong>#}
+{#                                &nbsp;- {{ rdv.userPrenom }} {{ rdv.userNom }} - {{ rdv.userMail }}#}
+{#                            </li>#}
+{#                        {% endfor %}#}
+{#                    </ul>#}
+{#                </div>#}
+{#            {% endfor %}#}
+{#        {% else %}#}
+{#        <h2 class="text-muted">Vous n'avez pas de rendez-vous à venir</h2>#}
+{#        {% endif %}#}
+    </div>
+{% endblock %}

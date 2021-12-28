@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\EDT;
-use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -35,7 +34,7 @@ class EDTRepository extends ServiceEntityRepository
 
 
 
-        $edts = $this->findBy(['idKine' => $userRepository->findBy(['email' => $Iuser->getUserIdentifier()])]);
+        $edts = $this->findBy(['kine' => $userRepository->findBy(['email' => $Iuser->getUserIdentifier()])]);
         $niceEdt = array();
         foreach($edts as $edt)
         {
@@ -64,7 +63,7 @@ class EDTRepository extends ServiceEntityRepository
         $edtswithusers = array();
         foreach($edts as $edt)
         {
-            $kine = $edt->getIdKine();
+            $kine = $edt->getKine();
 
             $edtswithusers[$kine->getId()]['email'] = $kine->getEmail();
             $edtswithusers[$kine->getId()]['nom'] = $kine->getNom();
