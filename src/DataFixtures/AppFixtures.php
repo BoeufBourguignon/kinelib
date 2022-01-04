@@ -19,17 +19,13 @@ class AppFixtures extends Fixture
     private \Faker\Generator $faker;
     private \Cocur\Slugify\Slugify $slugify;
 
-    public function __construct(EDTRepository $EDTRepository, RDVRepository $RDVRepository) {
+    public function __construct() {
         $this->faker = Factory::create('fr_FR');
         $this->slugify = new Slugify();
     }
 
     public function load(ObjectManager $manager): void
     {
-        $output = new ConsoleOutput();
-        $EDTRepository = $manager->getRepository(EDT::class);
-        $RDVRepository = $manager->getRepository(RDV::class);
-
         define('NB_OF_USER', 5);
         define('NB_OF_KINE', 5);
 

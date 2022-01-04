@@ -11,12 +11,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class KineController extends AbstractController
 {
+    /**
+     * Récupère l'EDT du kiné connecté et ses RDVs des 7 prochains jours
+     */
     #[Route('/kine/edt', name: 'kine_edt')]
-    public function edtKine(EDTRepository $EDTRepository, UserRepository $userRepository, EdtManagerService $edtManagerService): Response
+    public function edtKine(
+        EDTRepository $EDTRepository
+        , UserRepository $userRepository
+        , EdtManagerService $edtManagerService
+    ): Response
     {
         $user = $this->getUser();
-        if ($user === null)
-            return $this->redirectToRoute('login');
+        if ($user === null || !in_array("ROLE_KINE", $user->getRoles()))
+            return $this->redirectToRoute('home');
 
         $edt = $EDTRepository->getNiceLookingArrayFindByKine($user, $userRepository);
 

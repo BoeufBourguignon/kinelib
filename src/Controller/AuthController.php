@@ -14,8 +14,13 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AuthController extends AbstractController
 {
+    /**
+     * Fais le login (grâce au security.yaml en fait y'a rien de fait ici)
+     */
     #[Route('/login', name: 'login')]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(
+        AuthenticationUtils $authenticationUtils
+    ): Response
     {
          if ($this->getUser()) {
              return $this->redirectToRoute('home');
@@ -29,8 +34,15 @@ class AuthController extends AbstractController
         return $this->render('auth/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
+    /**
+     * Fais l'inscription grâce au form RegistrationFormType
+     */
     #[Route('/register', name: 'register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(
+        Request $request
+        , UserPasswordHasherInterface $userPasswordHasher
+        , EntityManagerInterface $entityManager
+    ): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('home');
@@ -41,13 +53,14 @@ class AuthController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
+
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
                     $form->get('password')->getData()
                 )
             );
+            // Si la case "est un kiné" est cochée
             if($form['isKine']->getData())
                 $user->setRoles(['ROLE_KINE']);
             else
@@ -64,6 +77,9 @@ class AuthController extends AbstractController
         ]);
     }
 
+    /**
+     * Logout grâce au security.yaml
+     */
     #[Route('/logout', name: 'logout')]
     public function logout(): void
     {

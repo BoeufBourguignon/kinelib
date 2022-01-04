@@ -32,6 +32,9 @@ class EdtManagerService
         date_default_timezone_set('Europe/Paris');
     }
 
+    /**
+     * Récupère les prochains rendez-vous possibles
+     */
     public function getEdtKineForOneWeek(string $idKine, int $startTimestamp = 0): array {
         if ($startTimestamp == 0)
             $startTimestamp = time();
@@ -43,7 +46,7 @@ class EdtManagerService
 
         $currDay = $startTimestamp;
         $edt = array();
-        for ($j=0;$j<7;$j++) {
+        for ($j=0;$j<7;$j++) { //On se fait 7 jours
             // 0: Lundi, 1: Mardi, 2: Mercredi, ...
             $currDayNumber = date('N', $currDay) - 1 != -1 ? date('N', $currDay) - 1 : 6;
 
@@ -60,13 +63,16 @@ class EdtManagerService
                     'date' => (new \DateTime)->setTimestamp($currDay)
                 ]);
 
+            // On renseigne le jour en toutes lettres (Lundi, mardi, ...)
             $edt[date('d/m/Y', $currDay)]['jour'] = $this->jours[$currDayNumber];
-            if($currDay >= $today) {
+
+            if($currDay >= $today) { //On ne peut pas prendre de rdv pour hier etc
                 foreach ($edtKine as $edtKinePeriode) {
                     $heureDebut = date('H:i', strtotime($edtKinePeriode->getHeureDebut()));
                     $heureFin = date('H:i', strtotime($edtKinePeriode->getHeureFin()));
-                    while ($heureDebut < $heureFin) {
-                        if ($currDay != $startTimestamp || $heureDebut > $now) {
+                    while ($heureDebut < $heureFin) { // On remplis tous les rendez-vous du jour
+                        if ($currDay != $startTimestamp || $heureDebut > $now) { // Si on est ajd et plus tôt que maintenant on ne remplit pas
+                            //Vérifions que l'horaire actuel n'a pas déjà de RDV
                             $isThereARdv = false;
                             if (count($rdvs)) {
                                 $k = 0;
@@ -83,12 +89,28 @@ class EdtManagerService
                         }
                         $heureDebut = date('H:i', strtotime('+1 hour', strtotime($heureDebut)));
                     }
-                    //$edt[date('d/m/Y', $currDay)][$edtKinePeriode->getPeriode()]
                 }
             }
 
+            // On passe au jour suivant
             $currDay = strtotime('+1 day', $currDay);
         }
+        // L'array ressemblera à:
+        // 03/01/2022:
+        //   'jour': Lundi
+        //   'heures':
+        //     '08:00'
+        //     '09:00'
+        //     '10:00'
+        //     '11:00'
+        // 04/01/2022:
+        //   'jour': Mardi
+        //   'heures':
+        //     '08:00'
+        //     '09:00'
+        //     '10:00'
+        //     '11:00'
+        // ...etc... pour 7 jours à compter du startTimestamp
 
         return $edt;
     }

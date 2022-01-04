@@ -55,7 +55,13 @@
                                                 <td class="heures">
                                                     {% if content.heures is defined %}
                                                         {% for heure in content.heures %}
-                                                            <a class="btn btn-primary prendre-rdv-btn" href="{{ path('add_rdv', {'kine': kine.id, 'heure':heure, 'date':date}) }}">{{ heure }}</a>
+{#                                                            <a class="btn btn-primary prendre-rdv-btn" href="{{ path('add_rdv', {'kine': kine.id, 'heure':heure, 'date':date}) }}">{{ heure }}</a>#}
+                                                            <form action="{{ path('add_rdv') }}" method="post">
+                                                                <input type="hidden" name="kine" value="{{ kine.id }}">
+                                                                <input type="hidden" name="heure" value="{{ heure }}">
+                                                                <input type="hidden" name="date" value="{{ date }}">
+                                                                <button type="submit" class="btn btn-primary prendre-rdv-btn">{{ heure }}</button>
+                                                            </form>
                                                         {% endfor %}
                                                     {% else %}
                                                         <p class="text-muted text-center">____</p>

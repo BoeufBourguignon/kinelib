@@ -18,8 +18,8 @@ class AjaxController extends AbstractController
 {
     /**
      * Récupère les disponibilités du kiné $idKine pour les 7 prochaines jours
-     * L'EDT commence au jour et à l'heure de la requête
-     * et finit 7 jours après
+     * L'EDT au timestamp de l'url
+     * et finit 7 jours après ou avant
      * On récupère que les DISPOS, si pas de dispo, aucune entrée de faite
      */
     #[Route('/edt/{idKine}/{time}', name: 'edt_kine_week')]
@@ -51,8 +51,6 @@ class AjaxController extends AbstractController
 
             $orderedEdt['dispos'][] = $edtTmp;
         }
-
-        //dd($orderedEdt);
 
         return new JsonResponse(json_encode($orderedEdt));
     }
